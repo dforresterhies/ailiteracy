@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Literacy Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #862633;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #862633;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #ffc72c;
+            padding-bottom: 15px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+            border: 2px solid #862633;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #862633;
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .section-header:hover {
+            background: #ffc72c;
+            color: #862633;
+        }
+
+        .section-header::after {
+            content: "▼ Click to explore";
+            position: absolute;
+            right: 20px;
+            font-size: 0.9em;
+            font-weight: normal;
+        }
+
+        .section-content {
+            padding: 20px;
+            background: #f9f9f9;
+            display: none;
+        }
+
+        .terms-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .term-box {
+            background: white;
+            border: 3px solid #862633;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .term-box:nth-child(even) {
+            border-color: #ffc72c;
+        }
+
+        .term-title {
+            color: #862633;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .term-definition {
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .highlight-box {
+            background: #ffc72c;
+            color: #862633;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .tip-box {
+            background: #862633;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .tip-box::before {
+            content: "💡 ";
+            font-size: 1.2em;
+        }
+
+        .instructions {
+            background: #e8f4f8;
+            border-left: 4px solid #ffc72c;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #862633;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI Literacy Explorer</h1>
+        
+        <div class="instructions">
+            📋 Instructions: Click on each section header below to explore AI literacy concepts. Each section contains important information for understanding AI in education.
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection('intro')">
+                What is Generative AI?
+            </div>
+            <div class="section-content" id="intro">
+                <p><strong>Generative AI (GenAI)</strong> systems create brand-new text, images, audio, code and more by learning patterns from huge datasets—not by copying existing sentences verbatim.</p>
+                
+                <div class="highlight-box">
+                    That's why ChatGPT can draft an email, Stable Diffusion can paint a scene, and ElevenLabs can clone a voice.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection('terms')">
+                Key Terms to Master
+            </div>
+            <div class="section-content" id="terms">
+                <div class="terms-container">
+                    <div class="term-box">
+                        <div class="term-title">🧠 Artificial Intelligence (AI)</div>
+                        <div class="term-definition">Computers performing tasks that normally need human intelligence and decision-making capabilities.</div>
+                    </div>
+
+                    <div class="term-box">
+                        <div class="term-title">📊 Machine Learning</div>
+                        <div class="term-definition">Algorithms that learn patterns from data instead of following pre-written rules from a programmer.</div>
+                    </div>
+
+                    <div class="term-box">
+                        <div class="term-title">🔤 Large Language Model (LLM)</div>
+                        <div class="term-definition">A giant neural network trained on massive amounts of text data, like GPT-4, that can understand and generate human-like text.</div>
+                    </div>
+
+                    <div class="term-box">
+                        <div class="term-title">✍️ Prompt Engineering</div>
+                        <div class="term-definition">The art of crafting clear, specific requests so the AI model delivers exactly what you need.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection('why')">
+                Why This Matters for Teachers
+            </div>
+            <div class="section-content" id="why">
+                <div class="highlight-box">
+                    Knowing HOW GenAI works is the key to deeper conversations about useful outputs, bias, privacy and learning goals—exactly what you need to know to appropriately implement AI with your classes.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection('tip')">
+                Essential Teacher Tip
+            </div>
+            <div class="section-content" id="tip">
+                <div class="tip-box">
+                    <strong>Remember:</strong> You don't need to be an expert, just have some knowledge and be honest with the kids.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            var content = document.getElementById(sectionId);
+            var header = content.previousElementSibling;
+            
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+                header.style.background = "#ffc72c";
+                header.style.color = "#862633";
+                header.innerHTML = header.innerHTML.replace("▼ Click to explore", "▲ Click to collapse");
+            } else {
+                content.style.display = "none";
+                header.style.background = "#862633";
+                header.style.color = "white";
+                header.innerHTML = header.innerHTML.replace("▲ Click to collapse", "▼ Click to explore");
+            }
+        }
+    </script>
+</body>
+</html>
