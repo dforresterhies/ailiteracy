@@ -4,9 +4,9 @@ A facilitator-led AI literacy activity for a room of participants. Participants 
 
 ## Architecture
 
-Google Apps Script is the runtime; GitHub is source control. The Apps Script project contains `Code.gs`, `AI.gs`, `Index.html`, and `appsscript.json`, and it creates/uses a Google Sheet for workshop data.
+Google Apps Script is the runtime; GitHub is source control. The Apps Script project contains `Code.gs`, `Index.html`, and `appsscript.json`, and it creates/uses a Google Sheet for workshop data.
 
-Participants do **not** need a Google account or an individual ChatGPT/Claude/Gemini account. The app can call the OpenAI API from the Apps Script server using a facilitator-owned API key stored in Script Properties.
+Participants do not need a Google account to use the activity link. For the AI steps, participants use any AI platform they already have access to, such as a school-provided tool or an existing ChatGPT, Claude, Gemini, Copilot, or other account. The activity itself does not call an AI API and does not require an OpenAI API key.
 
 ## Improvements over the prototype
 
@@ -15,8 +15,8 @@ Participants do **not** need a Google account or an individual ChatGPT/Claude/Ge
 - Participant voting responses never include the hidden response type or owner.
 - Facilitator actions require a short-lived server-side token after passphrase authentication.
 - The server enforces submission/voting phases and validates votes.
-- Built-in workshop AI creates Version B and improves Version A for Version D, so participants do not need separate AI accounts.
-- AI usage is limited per participant/session to reduce accidental API-key abuse.
+- Version B includes a one-click copy button for the exact workshop prompt.
+- Version D includes a one-click copy button for an improvement prompt containing the participant's Version A.
 - Responses are length-limited and spreadsheet-formula-like text is escaped before storage.
 - Reset affects only the active session.
 - The reveal includes debrief prompts for discussion.
@@ -25,31 +25,21 @@ Participants do **not** need a Google account or an individual ChatGPT/Claude/Ge
 
 1. Go to `script.google.com` and create a new project named **Four Versions**.
 2. Replace the default `Code.gs` with `Code.gs` from this folder.
-3. Add another script file named `AI` and paste in `AI.gs`.
-4. Add an HTML file named exactly `Index` and paste in `Index.html`.
-5. In Project Settings, show the `appsscript.json` manifest and replace it with this folder's manifest.
-6. Save.
+3. Add an HTML file named exactly `Index` and paste in `Index.html`.
+4. In Project Settings, show the `appsscript.json` manifest and replace it with this folder's manifest.
+5. Save.
+6. Optional: in Project Settings → Script Properties, add `FAC_CODE` with your chosen facilitator passphrase. If you omit it, `setup()` generates one.
 7. Select the `setup` function and click **Run** once. Approve the requested permissions.
-8. Check the execution log. `setup()` logs the data spreadsheet URL and generates a facilitator passphrase if `FAC_CODE` is not already set.
-
-## Configure the built-in workshop AI
-
-In **Project Settings → Script Properties**, add:
-
-- `OPENAI_API_KEY` = your OpenAI API key
-- optional `OPENAI_MODEL` = model name; if omitted, the app uses `gpt-5-mini`
-- optional `FAC_CODE` = your chosen facilitator passphrase; if omitted, `setup()` creates one
-
-The OpenAI API key stays on the Apps Script server. It is never included in the participant HTML or returned to participant browsers.
-
-The current build allows up to four successful workshop-AI calls per participant/session. The normal activity uses two: one for Version B and one for Version D.
+8. Check the execution log. `setup()` logs the data spreadsheet URL and the generated facilitator passphrase if one was created.
 
 ## Participant creation flow
 
-- **A · All me:** participant writes the answer.
-- **B · Straight AI:** participant clicks **Generate with workshop AI**. No external AI login is needed.
-- **C · AI, then me:** the app copies Version B into Version C and the participant edits it to sound like themselves.
-- **D · Me, then AI:** participant clicks **Improve my original with workshop AI**, which sends Version A to the server and returns a revised version.
+- **A · All me:** participant writes the answer without AI.
+- **B · Straight AI:** participant clicks **Copy exact prompt for AI**, opens a new chat in an AI platform they already use, pastes the prompt, then pastes the first AI response back unchanged.
+- **C · AI, then me:** the app copies Version B into Version C and the participant edits it until it sounds like them.
+- **D · Me, then AI:** participant clicks **Copy Version A + improvement prompt**, opens a new AI chat, pastes it, then pastes the AI revision back unchanged.
+
+Using different AI platforms makes this a less controlled comparison of one specific model, but it supports the workshop goal of examining how confidently people infer authorship from writing style.
 
 ## Deploy for participants
 
@@ -78,8 +68,8 @@ Participant devices poll while waiting, so they should move to the next phase wi
 
 The app does not ask for names or email addresses. It creates a random browser participant ID and stores that ID locally so the same device can resume. The Google Sheet stores the random ID to associate a person's submissions/votes and to avoid giving them their own response to rate.
 
-Text sent through the built-in workshop AI is sent from Apps Script to the configured OpenAI API project. Use an API project and data controls appropriate for your organization and workshop audience.
+When participants use an external AI platform for Versions B and D, that platform's own account, privacy, and data-use policies apply.
 
 ## Test before the workshop
 
-Test the final `/exec` link in an incognito/private browser where you are not signed into Google, on the venue Wi-Fi, and on a phone. Complete a full A → B AI generation → C edit → D AI improvement → submit → vote → reveal cycle, then create a fresh workshop session for the live event.
+Test the final `/exec` link in an incognito/private browser where you are not signed into Google, on the venue Wi-Fi, and on a phone. Complete a full A → B copy/paste → C edit → D copy/paste → submit → vote → reveal cycle, then create a fresh workshop session for the live event.
